@@ -1,16 +1,13 @@
-# This is a sample Python script.
+from mtgsdk import Card
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# Example: Search for a card by name
+card_name = "Lightning Bolt"
+cards = Card.where(name=card_name).all()
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# Print card details
+for card in cards:
+    print(f"Name: {card.name}")
+    print(f"Mana Cost: {card.mana_cost}")
+    print(f"Type: {card.type}")
+    print(f"Set Name: {card.set_name}")
+    print(card.text)
