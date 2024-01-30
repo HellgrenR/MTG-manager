@@ -1,13 +1,20 @@
+import DBConnector
 from mtgsdk import Card
 
 # Example: Search for a card by name
-card_name = "Lightning Bolt"
+card_name = "Wrath of god"
 cards = Card.where(name=card_name).all()
 
+print(cards[0])
+
 # Print card details
-for card in cards:
-    print(f"Name: {card.name}")
-    print(f"Mana Cost: {card.mana_cost}")
-    print(f"Type: {card.type}")
-    print(f"Set Name: {card.set_name}")
-    print(card.text)
+print(vars(cards[0]))
+
+
+choice = input("1. View cards\n"
+               "2. View decks\n"
+               "3. Add cards\n"
+               "4. Add decks\n"
+               "Q. quit\n"
+               "Enter your choice: ")
+
