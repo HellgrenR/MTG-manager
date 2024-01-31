@@ -13,5 +13,6 @@ cards = Cards()
 match choice:
     case "1":
         print(cards.view_cards())
-
+    case "2":
+        print(cards.view_decks())
 

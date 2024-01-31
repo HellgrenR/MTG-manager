@@ -23,3 +23,12 @@ class Cards:
         result = cursor.fetchall()
 
         return result
+
+    def view_decks(self):
+        cursor = self.db_connection.cursor()
+
+        query = "SELECT * FROM Decks"
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        return result
