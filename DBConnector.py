@@ -1,7 +1,7 @@
 import mysql.connector
 
 
-class DBConnector:
+class DatabaseConnector:
 
     @staticmethod
     def connect():
@@ -11,3 +11,4 @@ class DBConnector:
             password="mypassword",
             database="MTG-manager"
         )
+
