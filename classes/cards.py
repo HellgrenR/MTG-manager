@@ -43,21 +43,27 @@ class Cards:
             "blue": 0,
             "black": 0,
             "red": 0,
-            "green": 0
+            "green": 0,
+            "NonType": 0
         }
 
-        for color in card.colors:
-            match color:
-                case "W":
-                    colors["white"] += 1
-                case "U":
-                    colors["blue"] += 1
-                case "B":
-                    colors["black"] += 1
-                case "R":
-                    colors["red"] += 1
-                case "G":
-                    colors["green"] += 1
+        print(vars(card))
+
+        if card.colors is not None:
+            for color in card.colors:
+                match color:
+                    case "W":
+                        colors["white"] += 1
+                    case "U":
+                        colors["blue"] += 1
+                    case "B":
+                        colors["black"] += 1
+                    case "R":
+                        colors["red"] += 1
+                    case "G":
+                        colors["green"] += 1
+                    case _:
+                        colors["NonType"] += 1
 
         cursor = self.db_connection.cursor()
 
