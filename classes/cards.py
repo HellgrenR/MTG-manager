@@ -17,15 +17,6 @@ class Cards:
 
         return result
 
-    def view_decks(self):
-        cursor = self.db_connection.cursor()
-
-        query = "SELECT * FROM Decks"
-        cursor.execute(query)
-        result = cursor.fetchall()
-
-        return result
-
     def add_card(self, card_name):
         cards = Card.where(name=card_name).all()
         card = cards[0]

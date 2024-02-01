@@ -1,4 +1,5 @@
 from classes.cards import Cards
+from classes.decks import Decks
 from menus.deck_creation import DeckCreation
 
 
@@ -12,13 +13,14 @@ class MainMenu:
                        "\nEnter your choice: ").lower().strip()
 
         cards = Cards()
+        decks = Decks()
 
         match self.choice:
             case "1":
                 print(cards.view_cards())
 
             case "2":
-                print(cards.view_decks())
+                print(decks.view_decks())
 
             case "3":
                 card_name = input("\nEnter card name (Make sure you spell it correctly): ")

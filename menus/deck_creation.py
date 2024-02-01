@@ -8,5 +8,7 @@ class DeckCreation:
                          "\nR. Return to main menu"
                          "\n Enter your choice: ").lower().strip()
 
-
+        match choice:
+            case "1":
+                pass
 
