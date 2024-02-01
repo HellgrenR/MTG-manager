@@ -15,4 +15,8 @@ match choice:
         print(cards.view_cards())
     case "2":
         print(cards.view_decks())
+    case "3":
+        card_name = input("Enter card name (Make sure you spell it correctly): ")
+        cards.add_card(card_name)
+
 
