@@ -62,8 +62,6 @@ class Cards:
                         colors["red"] += 1
                     case "G":
                         colors["green"] += 1
-                    case _:
-                        colors["NonType"] += 1
 
         cursor = self.db_connection.cursor()
 
