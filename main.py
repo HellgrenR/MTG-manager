@@ -21,18 +21,4 @@ match choice:
         cards.add_card(card_name)
 
     case "4":
-        choice_2 = input("\n1. Use new cards"
-                         "\n2. Use existing cards"
-                         "\nR. Return to main menu"
-                         "\n Enter your choice: ").lower().strip()
-
-        match choice_2:
-            case "1":
-
-
-            case "2":
-
-
-            case "3":
-
-
+    
