@@ -1,5 +1,5 @@
 from classes.cards import Cards
-#from menus.deck_creation import DeckCreation
+from menus.deck_creation import DeckCreation
 
 
 class MainMenu:
@@ -24,3 +24,6 @@ class MainMenu:
                 card_name = input("\nEnter card name (Make sure you spell it correctly): ")
                 cards.add_card(card_name)
 
+            case "4":
+                decks = DeckCreation()
+                decks.menu()
