@@ -19,3 +19,10 @@ class Decks:
 
         query = "INSERT INTO Decks (name, description) VALUES (%s, %s)"
         cursor.execute(query, (deck_name, deck_description))
+        result = self.db_connection.commit()
+        print("Deck created successfully")
+        return result
+
+    def add_to_deck_new(self):
+        pass
+
