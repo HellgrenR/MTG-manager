@@ -11,7 +11,7 @@ class Cards:
     def view_cards(self):
         cursor = self.db_connection.cursor()
 
-        query = "SELECT * FROM Cards"
+        query = "SELECT name FROM Cards"
         cursor.execute(query)
         result = cursor.fetchall()
 
@@ -21,21 +21,17 @@ class Cards:
         cards = Card.where(name=card_name).all()
 
         for card in cards:
-            broken = False
             while True:
                 choice = input(f"Is {card.name} the correct card? (y/n)").lower().strip()
 
                 if choice == "y":
-                    self.find_and_add_card(card)
-                    broken = True
-                    break
+                    card = self.find_and_add_card(card)
+                    return card
                 elif choice == "n":
                     break
                 else:
                     print("Invalid choice. Please enter 'y' or 'n'.")
                     continue
-            if broken:
-                break
 
     def find_and_add_card(self, card):
         colors = {
@@ -86,6 +82,7 @@ class Cards:
             self.db_connection.commit()
 
             print(f"Added {card.name}")
+            return card
 
         except mysql.connector.Error as err:
             print(f"Error while connecting to MySQL: {err}")
