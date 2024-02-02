@@ -37,6 +37,9 @@ class Decks:
                 card = cards.add_card(card_name)
                 card_list.append(card)
 
+        self.add_existing_to_deck(deck_name, card_list)
+
+    def add_existing_to_deck(self, deck_name, card_list):
         cursor = self.db_connection.cursor(dictionary=True)
 
         query = "SELECT * FROM Decks WHERE name = %s"
@@ -61,4 +64,3 @@ class Decks:
         else:
             print(f"Deck with name {deck_name} not found.")
             return None
-
