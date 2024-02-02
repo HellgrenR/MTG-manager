@@ -1,5 +1,5 @@
 from classes.cards import Cards
-from classes.decks import Decks
+from menus.card_menu import CardMenu
 from menus.deck_creation import DeckCreation
 
 
@@ -10,15 +10,12 @@ class MainMenu:
                        "\nQ. quit"
                        "\nEnter your choice: ").lower().strip()
 
-        cards = Cards()
-
         match self.choice:
             case "1":  # Card options
-                print(cards.view_cards())
+                cards = CardMenu()
 
             case "2":  # Deck options
                 decks = DeckCreation()
-                decks.menu()
 
             case "q":  # quit
                 pass

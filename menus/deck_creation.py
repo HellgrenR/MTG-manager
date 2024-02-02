@@ -4,8 +4,8 @@ from classes.cards import Cards
 
 class DeckCreation:
 
-    def menu(self):
-        choice = input("\n1. Create empty deck"
+    def __init__(self):
+        self.choice = input("\n1. Create empty deck"
                        "\n2. View decks"
                        "\n3. Add existing cards to deck"
                        "\n4. Add new cards to deck"
@@ -14,16 +14,16 @@ class DeckCreation:
                        "\nR. Return to main menu"
                        "\n Enter your choice: ").lower().strip()
 
-        decks = Decks()
+        self.decks = Decks()
 
-        match choice:
+        match self.choice:
             case "1":  # Create empty deck
                 deck_name = input("\nEnter deck name: ")
                 deck_description = input("Enter deck description: ")
                 decks.create_deck(deck_name, deck_description)
 
             case "2":  # View decks
-                print(decks.view_decks())
+                print(self.decks.view_decks())
 
             case "3":  # add existing cards to deck
                 deck_name = input("\nEnter deck name: ")
@@ -37,12 +37,12 @@ class DeckCreation:
                     else:
                         card_list.append(card_name)
 
-                decks.add_existing_to_deck(deck_name, card_list)
+                self.decks.add_existing_to_deck(deck_name, card_list)
 
             case "4":  # add new cards to deck
                 deck_name = input("\nEnter deck name: ")
 
-                decks.add_to_deck_new(deck_name)
+                self.decks.add_to_deck_new(deck_name)
 
             case "5":  # delete cards from deck
                 pass
