@@ -23,8 +23,14 @@ class MainMenu:
                 print(decks.view_decks())
 
             case "3":
-                card_name = input("\nEnter card name (Make sure you spell it correctly): ")
-                cards.add_card(card_name)
+                while True:
+                    card_name = input("\nEnter card name "
+                                      "\n!r to return: ").lower().strip()
+                    if card_name == "!r":
+                        print("Returning")
+                        break
+                    else:
+                        cards.add_card(card_name)
 
             case "4":
                 decks = DeckCreation()
