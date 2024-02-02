@@ -26,7 +26,13 @@ class CardMenu:
                             self.cards.add_card(card_name)
 
                 case "3":  # Delete cards
-                    pass
+                    while True:
+                        card_name = input("\n!r to return"
+                                          "\nEnter card name ")
+                        if card_name == "!r":
+                            break
+                        else:
+                            self.cards.remove_card(card_name)
 
                 case "r":  # Return to main menu
                     return

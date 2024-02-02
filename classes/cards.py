@@ -17,6 +17,20 @@ class Cards:
 
         return result
 
+    def remove_card(self, card_name):
+        cursor = self.db_connection.cursor()
+
+        subquery = ("SELECT 1 FROM CardDeck "
+                    "WHERE CardDeck.card_id = Cards.id LIMIT 1")
+
+        # Delete the card only if it's not in CardDeck
+        query = f"DELETE FROM Cards WHERE Cards.name = %s AND NOT EXISTS ({subquery}) LIMIT 1"
+
+        cursor.execute(query, (card_name,))
+        result = self.db_connection.commit()
+        print(f"Removed {card_name}")
+        print(result)
+
     def add_card(self, card_name):
         cards = Card.where(name=card_name).all()
 
