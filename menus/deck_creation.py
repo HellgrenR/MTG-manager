@@ -1,4 +1,4 @@
-
+from classes.decks import Decks
 
 class DeckCreation:
 
@@ -8,7 +8,12 @@ class DeckCreation:
                          "\nR. Return to main menu"
                          "\n Enter your choice: ").lower().strip()
 
+        decks = Decks()
+
         match choice:
             case "1":
-                pass
+                deck_name = input("Enter deck name: ")
+                deck_description = input("Enter deck description: ")
+                decks.create_deck(deck_name, deck_description)
+
 
