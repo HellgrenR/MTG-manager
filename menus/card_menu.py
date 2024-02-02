@@ -2,7 +2,7 @@ from classes.cards import Cards
 
 
 class CardMenu:
-    def __init__(self)
+    def __init__(self):
         self.choice = input("\n1. View cards"
                             "\n2. Add cards"
                             "\n3. Delete cards"
