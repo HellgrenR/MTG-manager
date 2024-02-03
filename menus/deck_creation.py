@@ -50,7 +50,9 @@ class DeckCreation:
                     pass
 
                 case "6":  # delete entire decks
-                    pass
+                    deck_name = input("\nEnter deck name: ")
+
+                    self.decks.delete_deck(deck_name)
 
                 case "r":  # return to main_menu
                     return

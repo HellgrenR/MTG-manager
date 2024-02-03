@@ -64,4 +64,20 @@ class Decks:
         else:
             print(f"Deck with name {deck_name} not found.")
             return None
-        
+
+    def delete_deck(self, deck_name):
+        cursor = self.db_connection.cursor(dictionary=True)
+
+        subquery = "SELECT id FROM Decks WHERE name = %s"
+        query = f"DELETE FROM CardDeck WHERE deck_id IN ({subquery})"
+
+        cursor.execute(query, (deck_name,))
+        result = self.db_connection.commit()
+
+        query = "DELETE FROM Decks WHERE name = %s"
+        cursor.execute(query, (deck_name,))
+        result2 = self.db_connection.commit()
+
+        print(f"Deleted deck {deck_name}")
+
+        return result, result2
