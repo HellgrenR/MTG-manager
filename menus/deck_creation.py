@@ -50,7 +50,10 @@ class DeckCreation:
                     self.decks.add_to_deck_new(deck_name)
 
                 case "5":  # delete cards from deck
-                    pass
+                    deck_name = input("\nEnter deck name: ")
+                    card_name = input("\nEnter card name: ")
+
+                    self.decks.delete_card_from_deck(card_name, deck_name)
 
                 case "6":  # delete entire decks
                     deck_name = input("\nEnter deck name: ")

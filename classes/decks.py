@@ -81,3 +81,41 @@ class Decks:
         print(f"Deleted deck {deck_name}")
 
         return result, result2
+
+    def delete_card_from_deck(self, card_name, deck_name):
+        cursor = self.db_connection.cursor(dictionary=True)
+
+        # Get all card IDs with the given name
+        query_card_ids = "SELECT id FROM Cards WHERE name = %s"
+        cursor.execute(query_card_ids, (card_name,))
+        card_ids_result = cursor.fetchall()
+
+        if not card_ids_result:
+            print(f"No cards found with the name '{card_name}'.")
+            return None
+
+        # Get the deck ID
+        query_deck_id = "SELECT id FROM Decks WHERE name = %s"
+        cursor.execute(query_deck_id, (deck_name,))
+        deck_id_result = cursor.fetchone()
+
+        if not deck_id_result:
+            print(f"Deck '{deck_name}' not found.")
+            return None
+
+        deck_id = deck_id_result["id"]
+
+        # Delete each card with the given name from the CardDeck table
+        for card_id_result in card_ids_result:
+            card_id = card_id_result["id"]
+            query_delete_card = "DELETE FROM CardDeck WHERE card_id = %s AND deck_id = %s"
+            cursor.execute(query_delete_card, (card_id, deck_id))
+
+        result = self.db_connection.commit()
+
+        if result:
+            print(f"Deleted all cards with the name '{card_name}' from '{deck_name}'.")
+        else:
+            print(f"Failed to delete cards with the name '{card_name}' from '{deck_name}'.")
+
+        return result
