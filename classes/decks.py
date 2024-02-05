@@ -15,6 +15,42 @@ class Decks:
 
         return result
 
+    def view_contents(self, deck_name):
+        cursor = self.db_connection.cursor(dictionary=True)
+
+        # Get the deck ID
+        query_deck_id = "SELECT id FROM Decks WHERE name = %s"
+        cursor.execute(query_deck_id, (deck_name,))
+        deck_id_result = cursor.fetchone()
+
+        if not deck_id_result:
+            print(f"Deck '{deck_name}' not found.")
+            return None
+
+        deck_id = deck_id_result["id"]
+
+        # Select card IDs associated with the deck from the CardDeck table
+        query_card_ids = "SELECT card_id FROM CardDeck WHERE deck_id = %s"
+        cursor.execute(query_card_ids, (deck_id,))
+        card_ids_result = cursor.fetchall()
+
+        if not card_ids_result:
+            print(f"No cards found in deck '{deck_name}'.")
+            return None
+
+        # Get card names associated with the retrieved card IDs
+        card_names = []
+        for card_id_result in card_ids_result:
+            card_id = card_id_result["card_id"]
+            query_card_name = "SELECT name FROM Cards WHERE id = %s"
+            cursor.execute(query_card_name, (card_id,))
+            card_name_result = cursor.fetchone()
+
+            if card_name_result:
+                card_names.append(card_name_result["name"])
+
+        return card_names
+
     def create_deck(self, deck_name, deck_description):
         cursor = self.db_connection.cursor()
 
