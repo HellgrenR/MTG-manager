@@ -1,6 +1,7 @@
 from classes.cards import Cards
 from menus.card_menu import CardMenu
 from menus.deck_creation import DeckCreation
+from menus.stat_menu import StatMenu
 
 
 class MainMenu:
@@ -11,6 +12,7 @@ class MainMenu:
                                 "\n================================="
                                 "\n1. Card options"
                                 "\n2. View decks"
+                                "\n3. View statistics"
                                 "\nQ. quit"
                                 "\nEnter your choice: ").lower().strip()
 
@@ -20,6 +22,9 @@ class MainMenu:
 
                 case "2":  # Deck options
                     decks = DeckCreation()
+
+                case "3":
+                    stats = StatMenu()
 
                 case "q":  # quit
                     print("Goodbye!")
