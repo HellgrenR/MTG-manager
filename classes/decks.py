@@ -128,20 +128,21 @@ class Decks:
                 break
             else:
                 card = cards.add_card(card_name)
-                self.add_card_to_deck(deck, card_name)
+                self.add_card_to_deck(deck, card)
                 """try:
                     self.add_card_to_deck(deck, card_name)
                     print(f"Added card to deck '{deck_name}")
                 except mysql.connector.Error as err:
                     print(f"Error adding card to deck '{err}")"""
 
-    def add_card_to_deck(self, deck, card_name):
+    def add_card_to_deck(self, deck, card):
         cursor = self.db_connection.cursor(dictionary=True)
         deck = deck[0]
-
+        card_name = card.name
+        print(card_name)
         # Retrieve card ID using subquery
-        subquery = "SELECT id FROM Cards WHERE name LIKE %s LIMIT 1"
-        cursor.execute(subquery, (f"%{card_name}%",))
+        subquery = "SELECT id FROM Cards WHERE name = %s LIMIT 1"
+        cursor.execute(subquery, (card_name,))
         card_result = cursor.fetchone()
 
         if card_result:

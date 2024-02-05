@@ -95,7 +95,7 @@ class Cards:
                                    card.toughness))
             self.db_connection.commit()
 
-            print(f"Added {card.name}")
+            print(f"Added {card.name} to database")
             return card
 
         except mysql.connector.Error as err:
