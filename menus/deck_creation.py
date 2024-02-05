@@ -51,7 +51,7 @@ class DeckCreation:
                             else:
                                 card_list.append(card_name)
 
-                        self.decks.add_existing_to_deck(deck_name, card_list)
+                        self.decks.add_existing_to_deck(deck_name, card_list) # MAKE WORK WITH NEW METHOD
 
                 case "5":  # add new cards to deck
                     deck_name = input("\nEnter deck name: ")

@@ -136,54 +136,39 @@ class Decks:
                     print(f"Error adding card to deck '{err}")"""
 
     def add_card_to_deck(self, deck, card):
-        cursor = self.db_connection.cursor(dictionary=True)
-        deck = deck[0]
-        card_name = card.name
-        print(card_name)
-        # Retrieve card ID using subquery
-        subquery = "SELECT id FROM Cards WHERE name = %s LIMIT 1"
-        cursor.execute(subquery, (card_name,))
-        card_result = cursor.fetchone()
+        updated_db = DatabaseConnector.connect()
+        cursor = updated_db.cursor(dictionary=True)
 
-        if card_result:
-            card_id = card_result["id"]
+        try:
+            deck = deck[0]
+            card_name = card.name
+            print(f"Adding card '{card_name}' to deck '{deck['name']}'")
 
-            # Insert card into CardDeck table
-            query = "INSERT INTO CardDeck (card_id, deck_id) VALUES (%s, %s)"
-            cursor.execute(query, (card_id, deck["id"]))
-            self.db_connection.commit()
+            # Retrieve card ID using subquery
+            subquery = "SELECT id FROM Cards WHERE name = %s LIMIT 1"
+            cursor.execute(subquery, (card_name,))
+            card_result = cursor.fetchone()
+            print(card_result)
 
-            print(f"Added card '{card_name}' to deck '{deck['name']}'")
-        else:
-            print(f"Card '{card_name}' not found.")
+            if card_result:
+                card_id = card_result["id"]
+                print("cardID: ", card_id)
+                print("DeckID: ", deck["id"])
 
-        cursor.close()
-
-    def add_existing_to_deck(self, deck_name, card_list):
-        cursor = self.db_connection.cursor(dictionary=True)
-
-        query = "SELECT * FROM Decks WHERE name = %s"
-        cursor.execute(query, (deck_name,))
-        deck = cursor.fetchone()
-
-        if deck:
-            # If the deck exists, add cards to the CardDeck table
-            for card in card_list:
-                # Fetch the card from the Cards table
-                query_card = "SELECT * FROM Cards WHERE name = %s"
-                cursor.execute(query_card, (card.name,))
-                fetched_card = cursor.fetchall()[0]  # Read the result set
-
-                # Insert into CardDeck
-                query_insert = "INSERT INTO CardDeck (card_id, deck_id) VALUES (%s, %s)"
-                cursor.execute(query_insert, (fetched_card["id"], deck["id"]))
-
-            result = self.db_connection.commit()
-            print(f"Added cards to {deck['name']}")
-            return result
-        else:
-            print(f"Deck with name {deck_name} not found.")
-            return None
+                # Insert card into CardDeck table
+                query = "INSERT INTO CardDeck (card_id, deck_id) VALUES (%s, %s)"
+                cursor.execute(query, (card_id, deck["id"]))
+                try:
+                    updated_db.commit()
+                    print("Commit successful")
+                except mysql.connector.Error as commit_err:
+                    print(f"Error during commit: {commit_err}")
+            else:
+                print(f"Card '{card_name}' not found.")
+        except mysql.connector.Error as err:
+            print(f"Error adding card to deck: {err}")
+        finally:
+            cursor.close()
 
     def delete_deck(self, deck_name):
         cursor = self.db_connection.cursor(dictionary=True)
