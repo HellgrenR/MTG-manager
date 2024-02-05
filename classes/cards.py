@@ -58,8 +58,6 @@ class Cards:
             "NonType": 0
         }
 
-        print(vars(card))
-
         if card.colors is not None:
             for color in card.colors:
                 match color:
