@@ -5,7 +5,10 @@ class CardMenu:
     def __init__(self):
         self.cards = Cards()
         while True:
-            choice = input("\n1. View cards"
+            choice = input("\n================================="
+                           "\n           CARDS MENU"
+                           "\n================================="
+                           "\n1. View cards"
                            "\n2. Add cards"
                            "\n3. Delete cards"
                            "\nR. return to main menu"

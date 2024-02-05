@@ -9,7 +9,10 @@ class DeckCreation:
         self.decks = Decks()
 
         while True:
-            self.choice = input("\n1. Create empty deck"
+            self.choice = input("\n================================="
+                                "\n           DECKS MENU"
+                                "\n================================="
+                                "\n1. Create empty deck"
                                 "\n2. View decks"
                                 "\n3. Add existing cards to deck"
                                 "\n4. Add new cards to deck"
