@@ -18,7 +18,7 @@ class Decks:
 
             if result:
                 print(f"Deck with name {deck_name} exists.")
-                return True
+                return result
             else:
                 print(f"Deck with name {deck_name} not found.")
                 return False
@@ -117,9 +117,9 @@ class Decks:
         print("Deck created successfully")
         return result  # Add error handling
 
-    def add_to_deck_new(self, deck_name):
+    def add_new_to_deck(self, deck_name):
+        deck = self.check_deck_name(deck_name)
         cards = Cards()
-        card_list = []
 
         while True:
             card_name = input("\nEnter card name\n!r to return: ").lower().strip()
@@ -128,9 +128,35 @@ class Decks:
                 break
             else:
                 card = cards.add_card(card_name)
-                card_list.append(card)
+                self.add_card_to_deck(deck, card_name)
+                """try:
+                    self.add_card_to_deck(deck, card_name)
+                    print(f"Added card to deck '{deck_name}")
+                except mysql.connector.Error as err:
+                    print(f"Error adding card to deck '{err}")"""
 
-        self.add_existing_to_deck(deck_name, card_list)
+    def add_card_to_deck(self, deck, card_name):
+        cursor = self.db_connection.cursor(dictionary=True)
+        deck = deck[0]
+
+        # Retrieve card ID using subquery
+        subquery = "SELECT id FROM Cards WHERE name LIKE %s LIMIT 1"
+        cursor.execute(subquery, (f"%{card_name}%",))
+        card_result = cursor.fetchone()
+
+        if card_result:
+            card_id = card_result["id"]
+
+            # Insert card into CardDeck table
+            query = "INSERT INTO CardDeck (card_id, deck_id) VALUES (%s, %s)"
+            cursor.execute(query, (card_id, deck["id"]))
+            self.db_connection.commit()
+
+            print(f"Added card '{card_name}' to deck '{deck['name']}'")
+        else:
+            print(f"Card '{card_name}' not found.")
+
+        cursor.close()
 
     def add_existing_to_deck(self, deck_name, card_list):
         cursor = self.db_connection.cursor(dictionary=True)

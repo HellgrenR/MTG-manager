@@ -55,10 +55,7 @@ class DeckCreation:
 
                 case "5":  # add new cards to deck
                     deck_name = input("\nEnter deck name: ")
-                    check = self.decks.check_deck_name(deck_name)
-
-                    if check:
-                        self.decks.add_to_deck_new(deck_name)
+                    self.decks.add_new_to_deck(deck_name)
 
                 case "6":  # delete cards from deck
                     deck_name = input("\nEnter deck name: ")
