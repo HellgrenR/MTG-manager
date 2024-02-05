@@ -1,5 +1,6 @@
 from classes.decks import Decks
 from classes.cards import Cards
+import pandas as pd
 
 
 class DeckCreation:
@@ -29,12 +30,18 @@ class DeckCreation:
                     self.decks.create_deck(deck_name, deck_description)
 
                 case "2":  # View decks
-                    print(self.decks.view_decks())
+                    decks = self.decks.view_decks()
+                    decks_df = pd.DataFrame(decks)
+                    print("\nDecks: \n", decks_df)
 
                 case "3":  # view deck contents
                     deck_name = input("\nEnter deck name: ")
 
-                    print(self.decks.view_contents(deck_name))
+                    contents = self.decks.view_contents(deck_name)
+                    contents_df = pd.DataFrame(contents)
+                    contents_df.sort_values(by="Cards", ascending=True, inplace=True)
+
+                    print("\nDeck contents: \n", contents_df)
 
                 case "4":  # add existing cards to deck
                     deck_name = input("\nEnter deck name: ")
