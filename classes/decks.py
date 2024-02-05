@@ -1,10 +1,31 @@
 from classes.DBConnector import DatabaseConnector
 from classes.cards import Cards
+import mysql.connector
 
 
 class Decks:
     def __init__(self):
         self.db_connection = DatabaseConnector.connect()
+
+    def check_deck_name(self, deck_name):
+        cursor = self.db_connection.cursor(dictionary=True)
+
+        try:
+            query = "SELECT * FROM Decks WHERE name = %s"
+            cursor.execute(query, (deck_name,))
+            result = cursor.fetchall()
+            cursor.close()
+
+            if result:
+                print(f"Deck with name {deck_name} exists.")
+                return True
+            else:
+                print(f"Deck with name {deck_name} not found.")
+                return False
+
+        except mysql.connector.Error as err:
+            print(f"Error: {err}")
+            return False
 
     def view_decks(self):
         cursor = self.db_connection.cursor()
