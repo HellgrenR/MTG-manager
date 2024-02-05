@@ -7,14 +7,19 @@ class StatMenu:
 
         self.stats = Stats()
 
-        choice = input("\n================================="
-                       "\n           STATS MENU"
-                       "\n================================="
-                       "\n1. View deck mana curve"
-                       "\n2. View deck color mix")
+        while True:
+            choice = input("\n================================="
+                           "\n           STATS MENU"
+                           "\n================================="
+                           "\n1. View deck mana curve"
+                           "\n2. View deck color mix"
+                           "\nr. Return to main menu")
 
-        match choice:
-            case "1":  # View mana curve
-                pass
+            match choice:
+                case "1":  # View mana curve
+                    deck_name = input("\nEnter deck name: ")
+                    print(self.stats.view_mana_curve(deck_name))
 
+                case "r":
+                    return
 
