@@ -5,10 +5,10 @@ import mysql.connector
 
 class Decks:
     def __init__(self):
-        self.db_connection = DatabaseConnector.connect()
-
+        pass
     def check_deck_name(self, deck_name):
-        cursor = self.db_connection.cursor(dictionary=True)
+        db_connection = DatabaseConnector.connect()
+        cursor = db_connection.cursor(dictionary=True)
 
         try:
             query = "SELECT * FROM Decks WHERE name = %s"
@@ -28,7 +28,8 @@ class Decks:
             return False
 
     def view_decks(self):
-        cursor = self.db_connection.cursor()
+        db_connection = DatabaseConnector.connect()
+        cursor = db_connection.cursor(dictionary=True)
 
         query = "SELECT * FROM Decks"
         cursor.execute(query)
@@ -37,7 +38,8 @@ class Decks:
         return result
 
     def get_all_from_deck(self, deck_name):
-        cursor = self.db_connection.cursor(dictionary=True)
+        db_connection = DatabaseConnector.connect()
+        cursor = db_connection.cursor(dictionary=True)
 
         # Get the deck ID
         query_deck_id = "SELECT id FROM Decks WHERE name = %s"
@@ -73,7 +75,8 @@ class Decks:
         return cards
 
     def view_contents(self, deck_name):
-        cursor = self.db_connection.cursor(dictionary=True)
+        db_connection = DatabaseConnector.connect()
+        cursor = db_connection.cursor(dictionary=True)
 
         # Get the deck ID
         query_deck_id = "SELECT id FROM Decks WHERE name = %s"
@@ -109,11 +112,12 @@ class Decks:
         return card_names
 
     def create_deck(self, deck_name, deck_description):
-        cursor = self.db_connection.cursor()
+        db_connection = DatabaseConnector.connect()
+        cursor = db_connection.cursor(dictionary=True)
 
         query = "INSERT INTO Decks (name, description) VALUES (%s, %s)"
         cursor.execute(query, (deck_name, deck_description))
-        result = self.db_connection.commit()
+        result = db_connection.commit()
         print("Deck created successfully")
         return result  # Add error handling
 
@@ -129,11 +133,6 @@ class Decks:
             else:
                 card = cards.add_card(card_name)
                 self.add_card_to_deck(deck, card)
-                """try:
-                    self.add_card_to_deck(deck, card_name)
-                    print(f"Added card to deck '{deck_name}")
-                except mysql.connector.Error as err:
-                    print(f"Error adding card to deck '{err}")"""
 
     def add_card_to_deck(self, deck, card):
         updated_db = DatabaseConnector.connect()
@@ -171,24 +170,26 @@ class Decks:
             cursor.close()
 
     def delete_deck(self, deck_name):
-        cursor = self.db_connection.cursor(dictionary=True)
+        db_connection = DatabaseConnector.connect()
+        cursor = db_connection.cursor(dictionary=True)
 
         subquery = "SELECT id FROM Decks WHERE name = %s"
         query = f"DELETE FROM CardDeck WHERE deck_id IN ({subquery})"
 
         cursor.execute(query, (deck_name,))
-        result = self.db_connection.commit()
+        result = DatabaseConnector.connect().commit()
 
         query = "DELETE FROM Decks WHERE name = %s"
         cursor.execute(query, (deck_name,))
-        result2 = self.db_connection.commit()
+        result2 = db_connection.commit()
 
         print(f"Deleted deck {deck_name}")
 
         return result, result2
 
     def delete_card_from_deck(self, card_name, deck_name):
-        cursor = self.db_connection.cursor(dictionary=True)
+        db_connection = DatabaseConnector.connect()
+        cursor = db_connection.cursor(dictionary=True)
 
         # Get all card IDs with the given name
         query_card_ids = "SELECT id FROM Cards WHERE name = %s"
@@ -216,7 +217,7 @@ class Decks:
             query_delete_card = "DELETE FROM CardDeck WHERE card_id = %s AND deck_id = %s"
             cursor.execute(query_delete_card, (card_id, deck_id))
 
-        result = self.db_connection.commit()
+        result = db_connection.commit()
 
         if result:
             print(f"Deleted all cards with the name '{card_name}' from '{deck_name}'.")

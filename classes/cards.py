@@ -6,10 +6,10 @@ import mysql.connector
 class Cards:
     def __init__(self):
         self.cards = []
-        self.db_connection = DatabaseConnector.connect()
 
     def view_cards(self):
-        cursor = self.db_connection.cursor()
+        db_connection = DatabaseConnector.connect()
+        cursor = db_connection.cursor(dictionary=True)
 
         query = "SELECT name FROM Cards"
         cursor.execute(query)
@@ -18,7 +18,8 @@ class Cards:
         return result
 
     def remove_card(self, card_name):
-        cursor = self.db_connection.cursor()
+        db_connection = DatabaseConnector.connect()
+        cursor = db_connection.cursor(dictionary=True)
 
         subquery = ("SELECT 1 FROM CardDeck "
                     "WHERE CardDeck.card_id = Cards.id LIMIT 1")
@@ -27,7 +28,7 @@ class Cards:
         query = f"DELETE FROM Cards WHERE Cards.name = %s AND NOT EXISTS ({subquery}) LIMIT 1"
 
         cursor.execute(query, (card_name,))
-        result = self.db_connection.commit()
+        result = db_connection.commit()
         print(f"Removed {card_name}")
         print(result)
 
@@ -73,7 +74,8 @@ class Cards:
                     case "G":
                         colors["green"] += 1
 
-        cursor = self.db_connection.cursor()
+        db_connection = DatabaseConnector.connect()
+        cursor = db_connection.cursor(dictionary=True)
 
         query = """INSERT INTO Cards 
         (name, mana_cost, type, rarity, text, image_url, white, blue, black, red, green, power, toughness) 
@@ -93,7 +95,7 @@ class Cards:
                                    colors["green"],
                                    card.power,
                                    card.toughness))
-            self.db_connection.commit()
+            db_connection.commit()
 
             print(f"Added {card.name} to database")
             return card
