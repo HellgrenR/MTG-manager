@@ -38,17 +38,20 @@ class DeckCreation:
 
                 case "4":  # add existing cards to deck
                     deck_name = input("\nEnter deck name: ")
-                    card_list = []
 
-                    while True:
-                        card_name = input("!f to finish"
-                                          "\nEnter card name: ").lower()
-                        if card_name == "!f":
-                            break
-                        else:
-                            card_list.append(card_name)
+                    check = self.decks.check_deck_name(deck_name)
+                    if check:
+                        card_list = []
 
-                    self.decks.add_existing_to_deck(deck_name, card_list)
+                        while True:
+                            card_name = input("!f to finish"
+                                              "\nEnter card name: ").lower()
+                            if card_name == "!f":
+                                break
+                            else:
+                                card_list.append(card_name)
+
+                        self.decks.add_existing_to_deck(deck_name, card_list)
 
                 case "5":  # add new cards to deck
                     deck_name = input("\nEnter deck name: ")
@@ -59,9 +62,11 @@ class DeckCreation:
 
                 case "6":  # delete cards from deck
                     deck_name = input("\nEnter deck name: ")
-                    card_name = input("\nEnter card name: ")
 
-                    self.decks.delete_card_from_deck(card_name, deck_name)
+                    check = self.decks.check_deck_name(deck_name)
+                    if check:
+                        card_name = input("\nEnter card name: ")
+                        self.decks.delete_card_from_deck(card_name, deck_name)
 
                 case "7":  # delete entire decks
                     deck_name = input("\nEnter deck name: ")
