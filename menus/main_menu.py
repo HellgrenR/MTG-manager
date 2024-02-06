@@ -1,4 +1,3 @@
-from classes.cards import Cards
 from menus.card_menu import CardMenu
 from menus.deck_creation import DeckCreation
 from menus.stat_menu import StatMenu

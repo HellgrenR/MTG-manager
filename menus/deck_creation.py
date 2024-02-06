@@ -1,5 +1,4 @@
 from classes.decks import Decks
-from classes.cards import Cards
 import pandas as pd
 
 
