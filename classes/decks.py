@@ -131,7 +131,9 @@ class Decks:
                 print("Returning")
                 break
             else:
+                # Add card to DB and return raw card info
                 card = cards.add_card(card_name)
+                # Add card to deck
                 self.add_card_to_deck(deck, card)
 
     def add_card_to_deck(self, deck, card):
@@ -160,10 +162,12 @@ class Decks:
                 try:
                     updated_db.commit()
                     print("Commit successful")
+                    return True
                 except mysql.connector.Error as commit_err:
                     print(f"Error during commit: {commit_err}")
             else:
                 print(f"Card '{card_name}' not found.")
+                return False
         except mysql.connector.Error as err:
             print(f"Error adding card to deck: {err}")
         finally:

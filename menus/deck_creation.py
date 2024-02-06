@@ -16,10 +16,9 @@ class DeckCreation:
                                 "\n1. Create empty deck"
                                 "\n2. View decks"
                                 "\n3. View deck contents"
-                                "\n4. Add existing cards to deck"
-                                "\n5. Add new cards to deck"
-                                "\n6. Delete cards from deck"
-                                "\n7. Delete decks"
+                                "\n4. Add cards to deck"
+                                "\n5. Delete cards from deck"
+                                "\n6. Delete decks"
                                 "\nR. Return to main menu"
                                 "\n Enter your choice: ").lower().strip()
 
@@ -43,28 +42,11 @@ class DeckCreation:
 
                     print("\nDeck contents: \n", contents_df)
 
-                case "4":  # add existing cards to deck
-                    deck_name = input("\nEnter deck name: ")
-
-                    check = self.decks.check_deck_name(deck_name)
-                    if check:
-                        card_list = []
-
-                        while True:
-                            card_name = input("!f to finish"
-                                              "\nEnter card name: ").lower()
-                            if card_name == "!f":
-                                break
-                            else:
-                                card_list.append(card_name)
-
-                        self.decks.add_existing_to_deck(deck_name, card_list) # MAKE WORK WITH NEW METHOD
-
-                case "5":  # add new cards to deck
+                case "4":  # add cards to deck
                     deck_name = input("\nEnter deck name: ")
                     self.decks.add_new_to_deck(deck_name)
 
-                case "6":  # delete cards from deck
+                case "5":  # delete cards from deck
                     deck_name = input("\nEnter deck name: ")
 
                     check = self.decks.check_deck_name(deck_name)
@@ -72,7 +54,7 @@ class DeckCreation:
                         card_name = input("\nEnter card name: ")
                         self.decks.delete_card_from_deck(card_name, deck_name)
 
-                case "7":  # delete entire decks
+                case "6":  # delete entire decks
                     deck_name = input("\nEnter deck name: ")
 
                     self.decks.delete_deck(deck_name)

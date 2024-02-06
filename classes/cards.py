@@ -49,6 +49,23 @@ class Cards:
                     continue
 
     def find_and_add_card(self, card):
+        db_connection = DatabaseConnector.connect()
+        cursor = db_connection.cursor(dictionary=True, buffered=True)
+
+        query = "SELECT * FROM Cards WHERE name = %s"
+        cursor.execute(query, (card.name,))
+        result = cursor.fetchone()
+
+        if result is None:
+            self.add_to_db(card)
+        else:
+            print(f"Found {card.name} in database")
+            return card
+
+    def add_to_db(self, card):
+        db_connection = DatabaseConnector.connect()
+        cursor = db_connection.cursor(dictionary=True, buffered=True)
+
         colors = {
             "white": 0,
             "blue": 0,
@@ -72,12 +89,9 @@ class Cards:
                     case "G":
                         colors["green"] += 1
 
-        db_connection = DatabaseConnector.connect()
-        cursor = db_connection.cursor(dictionary=True)
-
         query = """INSERT INTO Cards 
-        (name, mana_cost, type, rarity, text, image_url, white, blue, black, red, green, power, toughness) 
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+                    (name, mana_cost, type, rarity, text, image_url, white, blue, black, red, green, power, toughness) 
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
         try:
             cursor.execute(query, (card.name,
