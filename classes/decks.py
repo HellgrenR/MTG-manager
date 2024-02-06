@@ -220,12 +220,13 @@ class Decks:
             card_id = card_id_result["id"]
             query_delete_card = "DELETE FROM CardDeck WHERE card_id = %s AND deck_id = %s"
             cursor.execute(query_delete_card, (card_id, deck_id))
+            db_connection.commit()  # Commit changes
 
-        result = db_connection.commit()
+            # Check the number of rows affected
+            if cursor.rowcount > 0:
+                print(f"Deleted card with ID {card_id} from deck '{deck_name}'.")
+            else:
+                print(f"Card with ID {card_id} not found in deck '{deck_name}'.")
 
-        if result:
-            print(f"Deleted all cards with the name '{card_name}' from '{deck_name}'.")
-        else:
-            print(f"Failed to delete cards with the name '{card_name}' from '{deck_name}'.")
+        return
 
-        return result
