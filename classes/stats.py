@@ -28,6 +28,19 @@ class Stats:
         plt.title("Mana Cost Distribution")
         plt.show()
 
+    def view_mana_blend(self, deck_name):
+        deck = self.deck_to_df(deck_name)
+
+        mana_blend = deck[["white", "blue", "black", "red", "green"]].sum()
+        print(mana_blend)
+
+        colors = ["#fff700", "#0000FF", "#000000", "#FF0000", "#008000"]
+
+        # Plotting a pie chart without legend
+        ax = mana_blend.plot.pie(startangle=90, legend=False, colors=colors)
+
+        # Display the pie chart
+        plt.show()
 
 
 

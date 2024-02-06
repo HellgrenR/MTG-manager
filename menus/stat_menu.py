@@ -18,11 +18,11 @@ class StatMenu:
             match choice:
                 case "1":  # View mana curve
                     deck_name = input("\nEnter deck name: ")
-                    print(self.stats.view_mana_curve(deck_name))
+                    self.stats.view_mana_curve(deck_name)
 
                 case "2":  # View color mix
                     deck_name = input("\nEnter deck name: ")
-                    pass
+                    self.stats.view_mana_blend(deck_name)
 
 
                 case "r":
