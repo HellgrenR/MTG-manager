@@ -20,7 +20,7 @@ class DeckCreation:
                                 "\n5. Delete cards from deck"
                                 "\n6. Delete decks"
                                 "\nR. Return to main menu"
-                                "\n Enter your choice: ").lower().strip()
+                                "\nEnter your choice: ").lower().strip()
 
             match self.choice:
                 case "1":  # Create empty deck

@@ -13,7 +13,8 @@ class StatMenu:
                            "\n================================="
                            "\n1. View deck mana curve"
                            "\n2. View deck color mix"
-                           "\nr. Return to main menu")
+                           "\nr. Return to main menu"
+                           "\nEnter your choice: ").lower().strip()
 
             match choice:
                 case "1":  # View mana curve
