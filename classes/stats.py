@@ -36,7 +36,7 @@ class Stats:  # Creating a class called Stats
 
         colors = ["#fff700", "#0000FF", "#000000", "#FF0000", "#008000"]  # Defining colors for a pie chart
 
-        mana_blend.plot.pie(startangle=90, legend=False, colors=colors, autopct="%1.1f")  # Turing table into a pie chart
+        mana_blend.plot.pie(startangle=90, legend=False, colors=colors, autopct="%1.1f")  # Turning table into a pie chart
 
         plt.show()  # Displaying the pie chart
 
