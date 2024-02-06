@@ -20,6 +20,11 @@ class StatMenu:
                     deck_name = input("\nEnter deck name: ")
                     print(self.stats.view_mana_curve(deck_name))
 
+                case "2":  # View color mix
+                    deck_name = input("\nEnter deck name: ")
+                    pass
+
+
                 case "r":
                     return
 
