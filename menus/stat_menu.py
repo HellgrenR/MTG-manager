@@ -24,7 +24,8 @@ class StatMenu:
                     deck_name = input("\nEnter deck name: ")
                     self.stats.view_mana_blend(deck_name)
 
-
                 case "r":
                     return
 
+                case _:
+                    print("Invalid input")
