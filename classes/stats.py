@@ -21,12 +21,12 @@ class Stats:  # Creating a class called Stats
             print("Deck not found")  # Print deck not found
             return None  # Returning none
 
-
     def view_mana_curve(self, deck_name):  # Creating a method
         deck = self.deck_to_df(deck_name)  # Calling deck_to_df method
 
         if deck is not None:  # Check if deck was found
-            mana_cost_counts = deck.groupby("mana_cost").size().reset_index(name="count")  # Creating a table of the manacosts
+            mana_cost_counts = deck.groupby("mana_cost").size().reset_index(
+                name="count")  # Creating a table of the manacosts
             mana_cost_counts.plot(kind="bar", x="mana_cost", y="count", legend=False)  # Turning table into a diagram
             plt.xlabel("Mana Cost")  # Naming X axle
             plt.ylabel("Count")  # Naming Y axle
@@ -41,8 +41,6 @@ class Stats:  # Creating a class called Stats
             print(mana_blend)  # Printing it as a table
 
             colors = ["#fff700", "#0000FF", "#000000", "#FF0000", "#008000"]  # Defining colors for a pie chart
-            mana_blend.plot.pie(startangle=90, legend=False, colors=colors, autopct="%1.1f")  # Turning table into a pie chart
+            mana_blend.plot.pie(startangle=90, legend=False, colors=colors,
+                                autopct="%1.1f")  # Turning table into a pie chart
             plt.show()  # Displaying the pie chart
-
-
-
