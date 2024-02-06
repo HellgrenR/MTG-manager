@@ -1,6 +1,7 @@
 from mtgsdk import Card
 from classes.DBConnector import DatabaseConnector
 import mysql.connector
+import pandas as pd
 
 
 class Cards:
@@ -15,22 +16,9 @@ class Cards:
         cursor.execute(query)
         result = cursor.fetchall()
 
-        return result
+        result_df = pd.DataFrame(result)
 
-    def remove_card(self, card_name):
-        db_connection = DatabaseConnector.connect()
-        cursor = db_connection.cursor(dictionary=True)
-
-        subquery = ("SELECT 1 FROM CardDeck "
-                    "WHERE CardDeck.card_id = Cards.id LIMIT 1")
-
-        # Delete the card only if it's not in CardDeck
-        query = f"DELETE FROM Cards WHERE Cards.name = %s AND NOT EXISTS ({subquery}) LIMIT 1"
-
-        cursor.execute(query, (card_name,))
-        result = db_connection.commit()
-        print(f"Removed {card_name}")
-        print(result)
+        return result_df
 
     def add_card(self, card_name):
         cards = Card.where(name=card_name).all()
@@ -110,7 +98,6 @@ class Cards:
             db_connection.commit()
 
             print(f"Added {card.name} to database")
-            print("added to db", card, vars(card))
             return card
 
         except mysql.connector.Error as err:

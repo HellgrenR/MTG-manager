@@ -10,7 +10,6 @@ class CardMenu:
                            "\n================================="
                            "\n1. View cards"
                            "\n2. Add cards"
-                           "\n3. Delete cards"
                            "\nR. return to main menu"
                            "\nEnter your choice: ").lower().strip()
 
@@ -27,15 +26,6 @@ class CardMenu:
                             break
                         else:
                             self.cards.add_card(card_name)
-
-                case "3":  # Delete cards
-                    while True:
-                        card_name = input("\n!r to return"
-                                          "\nEnter card name ")
-                        if card_name == "!r":
-                            break
-                        else:
-                            self.cards.remove_card(card_name)
 
                 case "r":  # Return to main menu
                     return
