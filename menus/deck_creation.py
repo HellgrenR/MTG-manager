@@ -36,11 +36,14 @@ class DeckCreation:
                 case "3":  # view deck contents
                     deck_name = input("\nEnter deck name: ")
 
-                    contents = self.decks.view_contents(deck_name)
-                    contents_df = pd.DataFrame(contents)
-                    contents_df.sort_values(by="Cards", ascending=True, inplace=True)
+                    check = self.decks.check_deck_name(deck_name)
 
-                    print("\nDeck contents: \n", contents_df)
+                    if check:
+                        contents = self.decks.view_contents(deck_name)
+                        contents_df = pd.DataFrame(contents, columns=["Cards"])
+                        contents_df.sort_values(by="Cards", ascending=True, inplace=True)
+
+                        print("\nDeck contents: \n", contents_df)
 
                 case "4":  # add cards to deck
                     deck_name = input("\nEnter deck name: ")
