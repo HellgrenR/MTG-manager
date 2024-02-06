@@ -30,7 +30,7 @@ class DeckCreation:
                 case "2":  # View decks
                     decks = self.decks.view_decks()
                     decks_df = pd.DataFrame(decks)
-                    print("\nDecks: \n", decks_df)
+                    print("\nDecks: \n", decks_df["name"])
 
                 case "3":  # view deck contents
                     deck_name = input("\nEnter deck name: ")
