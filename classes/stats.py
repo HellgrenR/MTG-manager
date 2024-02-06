@@ -4,43 +4,41 @@ import matplotlib.pyplot as plt
 from classes.decks import Decks
 
 
-class Stats:
+class Stats:  # Creating a class called Stats
 
-    def __init__(self):
-        self.db_connection = DatabaseConnector.connect()
-        self.decks = Decks()
+    def __init__(self):  # Defining constructor
+        self.db_connection = DatabaseConnector.connect()  # Calling connect static method
+        self.decks = Decks()  # Creating an instance of Decks in Stats
 
-    def deck_to_df(self, deck_name):
-        self.decks.check_deck_name(deck_name)
-        deck = self.decks.get_all_from_deck(deck_name)
+    def deck_to_df(self, deck_name):  # Creating a method
+        self.decks.check_deck_name(deck_name)  # Calling a method to check if deck_name exists
+        deck = self.decks.get_all_from_deck(deck_name)  # Calling a method to get all cards from deck
 
-        deck_df = pd.DataFrame(deck)
+        deck_df = pd.DataFrame(deck)  # Turning deck info into dataframe
 
-        return deck_df
+        return deck_df  # Returning deck info as Dataframe
 
-    def view_mana_curve(self, deck_name):
-        deck = self.deck_to_df(deck_name)
+    def view_mana_curve(self, deck_name):  # Creating a method
+        deck = self.deck_to_df(deck_name)  # Checking if deck exists
 
-        mana_cost_counts = deck.groupby("mana_cost").size().reset_index(name="count")
-        mana_cost_counts.plot(kind="bar", x="mana_cost", y="count", legend=False)
-        plt.xlabel("Mana Cost")
-        plt.ylabel("Count")
-        plt.title("Mana Cost Distribution")
-        plt.show()
+        mana_cost_counts = deck.groupby("mana_cost").size().reset_index(name="count")  # Creating a table of the manacosts
+        mana_cost_counts.plot(kind="bar", x="mana_cost", y="count", legend=False)  # Turning table into a diagram
+        plt.xlabel("Mana Cost")  # Naming X axle
+        plt.ylabel("Count")  # Naming Y axle
+        plt.title("Mana Cost Distribution")  # Giving the diagram a title
+        plt.show()  # Displaying the diagram
 
-    def view_mana_blend(self, deck_name):
-        deck = self.deck_to_df(deck_name)
+    def view_mana_blend(self, deck_name):  # Creating a method
+        deck = self.deck_to_df(deck_name)  # Checking if deck exists
 
-        mana_blend = deck[["white", "blue", "black", "red", "green"]].sum()
-        print(mana_blend)
+        mana_blend = deck[["white", "blue", "black", "red", "green"]].sum()  # Creating a table of the mana colors
+        print(mana_blend)  # Printing it as a table
 
-        colors = ["#fff700", "#0000FF", "#000000", "#FF0000", "#008000"]
+        colors = ["#fff700", "#0000FF", "#000000", "#FF0000", "#008000"]  # Defining colors for a pie chart
 
-        # Plotting a pie chart without legend
-        ax = mana_blend.plot.pie(startangle=90, legend=False, colors=colors)
+        mana_blend.plot.pie(startangle=90, legend=False, colors=colors, autopct="%1.1f")  # Turing table into a pie chart
 
-        # Display the pie chart
-        plt.show()
+        plt.show()  # Displaying the pie chart
 
 
 
