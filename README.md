@@ -5,6 +5,5 @@ mysql-connector-python,
 mtgsdk https://github.com/MagicTheGathering/mtg-sdk-python
 
 
-This has also turned into a school project.
-I will create diagrams of decks using pandas and matplot.
-Hopefully I will have enough time to try to use NLP or Numpy aswell.
+I've created a program where I can upload my magic the gathering decks.
+I added methods to view statistics like the mana curve, color composition and such.
