@@ -40,7 +40,7 @@ class Cards:
                 choice = input(f"Is {card.name} the correct card? (y/n)").lower().strip()
 
                 if choice == "y":
-                    card = self.find_and_add_card(card)
+                    self.find_and_add_card(card)
                     return card
                 elif choice == "n":
                     break
@@ -110,6 +110,7 @@ class Cards:
             db_connection.commit()
 
             print(f"Added {card.name} to database")
+            print("added to db", card, vars(card))
             return card
 
         except mysql.connector.Error as err:
