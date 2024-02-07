@@ -143,7 +143,11 @@ class Decks:
 
         try:
             deck = deck[0]
-            card_name = card.name
+            card_name = None
+            try:
+                card_name = card.name
+            except AttributeError:
+                print("No card found, try again")
             print(f"Adding card '{card_name}' to deck '{deck['name']}'")
 
             # Retrieve card ID using subquery
