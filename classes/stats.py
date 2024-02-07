@@ -1,7 +1,7 @@
 from classes.DBConnector import DatabaseConnector
+from classes.decks import Decks
 import pandas as pd
 import matplotlib.pyplot as plt
-from classes.decks import Decks
 
 
 class Stats:  # Creating a class called Stats

@@ -37,21 +37,6 @@ class Decks:
 
         return result
 
-    def view_decks_and_cards(self):  # Define method
-        db_connection = DatabaseConnector.connect()  # Create new connection to database
-        cursor = db_connection.cursor(dictionary=True)  # Create cursor
-
-        query = ("SELECT * FROM Decks "  # Selecting all from decks
-                 "INNER JOIN CardDeck ON Decks.id = CardDeck.deck_id "  # Joining the id's for decks and carddeck
-                 "INNER JOIN Cards ON Cards.id = CardDeck.card_id")  # Joining the id's for cards and carddeck
-
-        cursor.execute(query)  # Executing query
-        result = cursor.fetchall()  # Fetching all results
-        cursor.close()  # Closing the cursor
-
-        return result  # Returning all decks with cards
-
-
     def get_all_from_deck(self, deck_name):
         db_connection = DatabaseConnector.connect()
         cursor = db_connection.cursor(dictionary=True)
