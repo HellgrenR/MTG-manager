@@ -6,26 +6,27 @@ import mysql.connector
 class Decks:
     def __init__(self):
         pass
-    def check_deck_name(self, deck_name):
-        db_connection = DatabaseConnector.connect()
-        cursor = db_connection.cursor(dictionary=True)
 
-        try:
-            query = "SELECT * FROM Decks WHERE name = %s"
-            cursor.execute(query, (deck_name,))
-            result = cursor.fetchall()
-            cursor.close()
+    def check_deck_name(self, deck_name):  # Defining a method
+        db_connection = DatabaseConnector.connect()  # Creating a connection to database
+        cursor = db_connection.cursor(dictionary=True)  # Creating a cursor returning dicts
 
-            if result:
-                print(f"Deck with name {deck_name} exists.")
-                return result
-            else:
-                print(f"Deck with name {deck_name} not found.")
-                return False
+        try:  # Try incase it doesn't work
+            query = "SELECT * FROM Decks WHERE name = %s"  # Creating a query to the database
+            cursor.execute(query, (deck_name,))  # Executing said query with the deckname variable
+            result = cursor.fetchall()  # Fetching all results
+            cursor.close()  # Closing cursor
 
-        except mysql.connector.Error as err:
-            print(f"Error: {err}")
-            return False
+            if result:  # If it found something
+                print(f"Deck with name {deck_name} exists.")  # Print conformation
+                return result  # Return result
+            else:  # If it didn't find anything
+                print(f"Deck with name {deck_name} not found.")  # Print message
+                return False  # Return a false statement
+
+        except mysql.connector.Error as err:  # If it didn't work, catch the error
+            print(f"Error: {err}")  # Print said error
+            return False  # Return False
 
     def view_decks(self):
         db_connection = DatabaseConnector.connect()
@@ -37,42 +38,42 @@ class Decks:
 
         return result
 
-    def get_all_from_deck(self, deck_name):
-        db_connection = DatabaseConnector.connect()
-        cursor = db_connection.cursor(dictionary=True)
+    def get_all_from_deck(self, deck_name):  # Defining a method
+        db_connection = DatabaseConnector.connect()  # Creating a connection to the database
+        cursor = db_connection.cursor(dictionary=True)  # Creating a cursor returning a dict
 
         # Get the deck ID
-        query_deck_id = "SELECT id FROM Decks WHERE name = %s"
-        cursor.execute(query_deck_id, (deck_name,))
-        deck_id_result = cursor.fetchone()
+        query_deck_id = "SELECT id FROM Decks WHERE name = %s"  # Creating a query for the db
+        cursor.execute(query_deck_id, (deck_name,))  # Executing said query with deck_name variable
+        deck_id_result = cursor.fetchone()  # Fetching one result, which is the deck
 
-        if not deck_id_result:
-            print(f"Deck '{deck_name}' not found.")
-            return None
+        if not deck_id_result:  # If it didn't find a deck
+            print(f"Deck '{deck_name}' not found.")  # Print message
+            return None  # Return none
 
-        deck_id = deck_id_result["id"]
+        deck_id = deck_id_result["id"]  # Create a variable for the deck ID
 
         # Select card IDs associated with the deck from the CardDeck table
-        query_card_ids = "SELECT card_id FROM CardDeck WHERE deck_id = %s"
-        cursor.execute(query_card_ids, (deck_id,))
-        card_ids_result = cursor.fetchall()
+        query_card_ids = "SELECT card_id FROM CardDeck WHERE deck_id = %s"  # Find the ids of the cards in the deck
+        cursor.execute(query_card_ids, (deck_id,))  # Execute the query with deck ID
+        card_ids_result = cursor.fetchall()  # Fetch all cards meeting requirement
 
-        if not card_ids_result:
-            print(f"No cards found in deck '{deck_name}'.")
-            return None
+        if not card_ids_result:  # If no cards found
+            print(f"No cards found in deck '{deck_name}'.")  # Print message
+            return None  # Return none
 
         # Get card names associated with the retrieved card IDs
-        cards = []
-        for card_id_result in card_ids_result:
-            card_id = card_id_result["card_id"]
-            query_cards = "SELECT * FROM Cards WHERE id = %s"
-            cursor.execute(query_cards, (card_id,))
-            card_result = cursor.fetchone()
+        cards = []  # Create a list of cards
+        for card_id_result in card_ids_result:  # For every id from the fetch
+            card_id = card_id_result["card_id"]  # create a variable for the card id
+            query_cards = "SELECT * FROM Cards WHERE id = %s"  # Create a query to find a card with a specific ID
+            cursor.execute(query_cards, (card_id,))  # Execute query with id variable
+            card_result = cursor.fetchone()  # Fetch card
 
-            if card_result:
-                cards.append(card_result)
+            if card_result:  # If it found a card
+                cards.append(card_result)  # Add card to cards list
 
-        return cards
+        return cards  # Return the cards list
 
     def view_contents(self, deck_name):
         db_connection = DatabaseConnector.connect()
@@ -229,4 +230,3 @@ class Decks:
                 print(f"Card with ID {card_id} not found in deck '{deck_name}'.")
 
         return
-
